@@ -30,7 +30,6 @@ var back_emitter;
 var update_interval = 4 * 60;
 var i = 0;
 var spaceship;
-var emitter;
 
 //initialize sprites
 function create() {
@@ -41,19 +40,6 @@ function create() {
     spaceship = game.add.sprite(0,100, 'spaceship');
     game.physics.p2.enable(spaceship);
 
-    emitter = game.add.emitter(0,0);
-    emitter.makeParticles('laser');
-    spaceship.addChild(emitter);
-
-    emitter.y = 0;
-    emitter.x = 0;
-
-    emitter.gravity = 0;
-    emitter.setYSpeed(-200);
-    emitter.setXSpeed(0);
-    emitter.maxRotation = 0;
-    emitter.minRotation = 0;
-    emitter.lifespan = 3000;
 
     back_emitter = game.add.emitter(game.world.centerX, -32, 600);
     back_emitter.makeParticles('asteroid', 1, 100, true, false);
@@ -68,9 +54,7 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
 
     game.physics.p2.enable(back_emitter);
-    //game.phsyics.p2.enable(emitter);
     back_emitter.start(false, 20000, 200);
-    emitter.start(false, 20000, 200);
 
     
 }
@@ -78,7 +62,6 @@ function create() {
 function update() {
     spaceship.body.setZeroVelocity();
     spaceship.body.rotation = 0;
-    //emitter.emitParticle();
 
     if (cursors.left.isDown)
     {
