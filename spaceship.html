@@ -30,6 +30,8 @@ var back_emitter;
 var update_interval = 4 * 60;
 var i = 0;
 var spaceship;
+var spaceshipCG = game.physics.p2.createCollisionGroup();
+var asteroidCG = game.physics.p2.createCollisionGroup();
 
 //initialize sprites
 function create() {
@@ -45,6 +47,7 @@ function create() {
     back_emitter.makeParticles('asteroid', 1, 100, true, false);
     //back_emitter.maxParticleScale = 3;
     //back_emitter.minParticleScale = 0.2;
+    back_emitter.enableBody = true;
     back_emitter.setYSpeed(100);
     back_emitter.gravity = 0;
     back_emitter.width = game.world.width;
@@ -54,6 +57,9 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
 
     game.physics.p2.enable(back_emitter);
+    back_emitter.body.setCollisionGroup(asteroidCG);
+    back_emitter.body.collides(spaceshipCG);   
+    spaceship.body.collides(asteroidCG, hit, this);
     back_emitter.start(false, 20000, 200);
 
     
@@ -62,6 +68,8 @@ function create() {
 function update() {
     spaceship.body.setZeroVelocity();
     spaceship.body.rotation = 0;
+
+    game.physics.arcade.collide(spaceship, back_emitter, hit, null, this);
 
     if (cursors.left.isDown)
     {
