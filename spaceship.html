@@ -35,7 +35,6 @@ var emitter;
 //initialize sprites
 function create() {
 
-    game.stage.backgroundColor = '#2d2d2d';
     game.physics.startSystem(Phaser.Physics.P2JS);
 
     game.add.sprite(0, 0, 'space');
@@ -45,6 +44,9 @@ function create() {
     emitter = game.add.emitter(0,0);
     emitter.makeParticles('laser');
     spaceship.addChild(emitter);
+
+    emitter.y = 0;
+    emitter.x = 0;
 
     emitter.gravity = 0;
     emitter.setYSpeed(-200);
@@ -65,8 +67,10 @@ function create() {
    
     cursors = game.input.keyboard.createCursorKeys();
 
-    game.physics.p2.enable(back_emitter)
+    game.physics.p2.enable(back_emitter);
+    //game.phsyics.p2.enable(emitter);
     back_emitter.start(false, 20000, 200);
+    emitter.start(false, 20000, 200);
 
     
 }
@@ -74,7 +78,7 @@ function create() {
 function update() {
     spaceship.body.setZeroVelocity();
     spaceship.body.rotation = 0;
-    emitter.emitParticle();
+    //emitter.emitParticle();
 
     if (cursors.left.isDown)
     {
